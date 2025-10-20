@@ -1,0 +1,74 @@
+<?php
+/**
+ * Database Configuration Template
+ * 
+ * Copy this file to 'db.php' and update with your database credentials
+ * 
+ * IMPORTANT: Never commit db.php to version control
+ * Add db.php to .gitignore to prevent accidental commits
+ */
+
+// Database connection parameters
+$host = 'localhost';                    // Database host (usually localhost)
+$username = 'your_username';            // Your MySQL username
+$password = 'your_password';            // Your MySQL password
+$database = 'uniform_detection';        // Database name
+
+// Create database connection
+$conn = new mysqli($host, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    // Log error instead of displaying it in production
+    error_log("Database connection failed: " . $conn->connect_error);
+    die("Connection failed. Please check your database configuration.");
+}
+
+// Set charset to prevent encoding issues
+$conn->set_charset("utf8");
+
+// Optional: Set timezone (adjust as needed)
+$conn->query("SET time_zone = '+00:00'");
+
+/* 
+ * Production Configuration Tips:
+ * 
+ * 1. Use environment variables for credentials:
+ *    $host = $_ENV['DB_HOST'] ?? 'localhost';
+ *    $username = $_ENV['DB_USERNAME'] ?? 'uniform_user';
+ *    $password = $_ENV['DB_PASSWORD'] ?? '';
+ *    $database = $_ENV['DB_DATABASE'] ?? 'uniform_detection';
+ * 
+ * 2. Enable SSL for remote connections:
+ *    $conn->ssl_set(null, null, "/path/to/ca-cert.pem", null, null);
+ * 
+ * 3. Set connection timeout:
+ *    $conn->options(MYSQLI_OPT_CONNECT_TIMEOUT, 10);
+ * 
+ * 4. Enable persistent connections for better performance:
+ *    $conn = new mysqli("p:" . $host, $username, $password, $database);
+ */
+
+/* 
+ * Common Database Settings:
+ * 
+ * Local Development (XAMPP/WAMP):
+ * - Host: localhost
+ * - Username: root
+ * - Password: (usually empty)
+ * - Database: uniform_detection
+ * 
+ * Production Server:
+ * - Host: localhost (or remote host)
+ * - Username: uniform_user (create dedicated user)
+ * - Password: strong_secure_password
+ * - Database: uniform_detection
+ * 
+ * Cloud Database (AWS RDS, Google Cloud SQL):
+ * - Host: your-instance.region.rds.amazonaws.com
+ * - Port: 3306 (default MySQL port)
+ * - Username: your_db_username
+ * - Password: your_secure_password
+ * - Database: uniform_detection
+ */
+?>

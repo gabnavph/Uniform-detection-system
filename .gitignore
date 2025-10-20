@@ -1,0 +1,154 @@
+# Uniform Monitoring System - .gitignore
+
+# Sensitive configuration files
+db.php
+config.php
+.env
+.env.local
+.env.production
+
+# Database credentials and sensitive data
+*/db_config.php
+*/database_config.php
+
+# User uploaded files
+uploads/students/*
+uploads/photos/*
+uploads/temp/*
+!uploads/students/.gitkeep
+!uploads/photos/.gitkeep
+
+# System logs
+logs/*.log
+logs/*.txt
+*.log
+*.log.*
+
+# Python virtual environment
+ai-detection/venv/
+ai-detection/.venv/
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+
+# Python package distribution
+ai-detection/build/
+ai-detection/dist/
+ai-detection/*.egg-info/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Model files (too large for git)
+*.pt
+*.onnx
+*.weights
+ai-detection/models/*.pt
+ai-detection/weights/*.pt
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+*.temp
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# Composer dependencies (use composer install)
+vendor/
+composer.lock
+
+# Node.js dependencies (if any)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# PHP specific
+*.cache
+cache/
+*.session
+
+# Apache/Nginx logs
+*.access.log
+*.error.log
+
+# Backup files
+backup/
+backups/
+*.backup
+*.bak
+*.sql.gz
+
+# Development and testing
+test_images/
+debug/
+*.debug
+
+# Documentation build files (if using generators)
+docs/_build/
+docs/.doctrees/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# Local configuration overrides
+local_config.php
+settings_local.php
+
+# Email queue files
+mail_queue/
+*.eml
+
+# Session files
+sessions/
+tmp/sessions/
+
+# Certificate files
+*.pem
+*.key
+*.crt
+ssl/
+
+# XAMPP specific
+xampp/
+.htaccess.backup
+error_log
+
+# Windows specific
+*.lnk
+
+# macOS specific
+.AppleDouble
+.LSOverride
+
+# Linux specific
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# Temporary PHP files
+*.php~
+*.php.bak

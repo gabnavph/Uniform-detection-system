@@ -1,0 +1,11 @@
+# Keep this file to maintain the uploads directory structure
+# Git requires at least one file to track empty directories
+
+# This directory will contain student profile photos
+# Ensure proper permissions are set for file uploads:
+# - Linux/Mac: chmod 755 uploads/students/
+# - Windows: Grant write permissions to web server user
+
+# File naming convention: student_id.jpg (e.g., 2024001.jpg)
+# Supported formats: JPG, JPEG, PNG, GIF
+# Maximum file size: 10MB (configurable in PHP settings)

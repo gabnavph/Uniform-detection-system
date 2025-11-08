@@ -15,21 +15,21 @@
 ### **Core System Architecture**
 ```mermaid
 graph TB
-    subgraph "🏗️ SMART WASTE SYSTEM"
-        subgraph "👥 User Management Layer"
-            A[ADMINS<br/>🔐 Authentication<br/>👑 Role Management]
+    subgraph "SMART WASTE SYSTEM"
+        subgraph "User Management Layer"
+            A[ADMINS<br/>Authentication<br/>Role Management]
         end
         
-        subgraph "🎯 Core Business Layer"
-            B[BINS<br/>📊 Status Tracking<br/>📍 Location Management]
-            C[WASTE_LOGS<br/>📈 Transaction History<br/>⚖️ Weight Tracking]
-            D[ALERT_HISTORY<br/>🚨 Alert States<br/>📅 Timeline Management]
+        subgraph "Core Business Layer"
+            B[BINS<br/>Status Tracking<br/>Location Management]
+            C[WASTE_LOGS<br/>Transaction History<br/>Weight Tracking]
+            D[ALERT_HISTORY<br/>Alert States<br/>Timeline Management]
         end
         
-        subgraph "🔧 System Services Layer"
-            E[NOTIFICATIONS<br/>💬 Message System<br/>🔔 User Alerts]
-            F[SENSOR_READINGS<br/>🌡️ Environmental Data<br/>📡 IoT Integration]
-            G[SETTINGS<br/>⚙️ Configuration<br/>📋 System Parameters]
+        subgraph "System Services Layer"
+            E[NOTIFICATIONS<br/>Message System<br/>User Alerts]
+            F[SENSOR_READINGS<br/>Environmental Data<br/>IoT Integration]
+            G[SETTINGS<br/>Configuration<br/>System Parameters]
         end
     end
     
@@ -49,61 +49,61 @@ graph TB
 ```mermaid
 erDiagram
     BINS {
-        int id PK "🔑 Primary Key"
-        varchar name "� Bin Name"
-        varchar type "� Waste Type"
-        varchar location "📍 Physical Location"
-        int level_percent "📊 Fill Level 0-100%"
-        varchar status "⚡ Current Status"
-        timestamp updated_at "🔄 Last Update"
+        int id PK "Primary Key"
+        varchar name "Bin Name"
+        varchar type "Waste Type"
+        varchar location "Physical Location"
+        int level_percent "Fill Level 0-100 percent"
+        varchar status "Current Status"
+        timestamp updated_at "Last Update"
     }
     
     WASTE_LOGS {
-        int id PK "🔑 Primary Key"
-        int bin_id FK "🔗 Foreign Key → bins.id"
-        varchar category "🗂️ Waste Category"
-        decimal weight_kg "⚖️ Weight in KG"
-        datetime logged_at "⏰ Disposal Time"
+        int id PK "Primary Key"
+        int bin_id FK "Foreign Key to bins.id"
+        varchar category "Waste Category"
+        decimal weight_kg "Weight in KG"
+        datetime logged_at "Disposal Time"
     }
     
     ALERT_HISTORY {
-        int id PK "🔑 Primary Key"
-        int bin_id "🔗 References bins.id"
-        varchar alert_key "🚨 Alert Type"
-        tinyint is_active "🟢 Active Status"
-        timestamp last_sent "📅 Last Alert Time"
+        int id PK "Primary Key"
+        int bin_id "References bins.id"
+        varchar alert_key "Alert Type"
+        tinyint is_active "Active Status"
+        timestamp last_sent "Last Alert Time"
     }
     
     ADMINS {
-        int id PK "🔑 Primary Key"
-        varchar username UK "🔒 Unique Login"
-        varchar name "👤 Full Name"
-        varchar email "📧 Email Address"
-        varchar password_hash "🔐 Encrypted Password"
-        varchar role "👑 User Role"
-        timestamp created_at "⏰ Account Created"
+        int id PK "Primary Key"
+        varchar username UK "Unique Login"
+        varchar name "Full Name"
+        varchar email "Email Address"
+        varchar password_hash "Encrypted Password"
+        varchar role "User Role"
+        timestamp created_at "Account Created"
     }
     
     NOTIFICATIONS {
-        int id PK "🔑 Primary Key"
-        enum type "📝 Message Type"
-        varchar message "💬 Notification Text"
-        timestamp created_at "⏰ Message Time"
-        tinyint is_read "👁️ Read Status"
+        int id PK "Primary Key"
+        enum type "Message Type"
+        varchar message "Notification Text"
+        timestamp created_at "Message Time"
+        tinyint is_read "Read Status"
     }
     
     SENSOR_READINGS {
-        int id PK "🔑 Primary Key"
-        int temperature "🌡️ Temperature °C"
-        int humidity "💧 Humidity %"
-        varchar client_ip "🌐 Source IP"
-        timestamp created_at "⏰ Reading Time"
+        int id PK "Primary Key"
+        int temperature "Temperature Celsius"
+        int humidity "Humidity Percentage"
+        varchar client_ip "Source IP"
+        timestamp created_at "Reading Time"
     }
     
     SETTINGS {
-        int id PK "🔑 Primary Key"
-        varchar setting_key UK "🔧 Config Key"
-        text setting_value "💾 Config Value"
+        int id PK "Primary Key"
+        varchar setting_key UK "Config Key"
+        text setting_value "Config Value"
     }
 
     BINS ||--o{ WASTE_LOGS : "1:M CASCADE DELETE"
@@ -175,35 +175,35 @@ erDiagram
 ### **🔄 Data Flow Relationship Chart**
 ```mermaid
 flowchart TD
-    subgraph "🔧 Hardware Layer"
-        A[Arduino R4 WiFi<br/>🎯 Sensor Hub<br/>4x HC-SR04 + Classification]
-        B[NodeMCU ESP8266<br/>📡 WiFi Gateway<br/>HTTP Client]
+    subgraph "Hardware Layer"
+        A[Arduino R4 WiFi<br/>Sensor Hub<br/>4x HC-SR04 + Classification]
+        B[NodeMCU ESP8266<br/>WiFi Gateway<br/>HTTP Client]
     end
     
-    subgraph "🌐 Network Layer"
-        C[WiFi Network<br/>📶 PLDTHOMEFIBRKFibH<br/>Static IP: 192.168.1.12]
+    subgraph "Network Layer"
+        C[WiFi Network<br/>WIFI NETWORK<br/>]
     end
     
-    subgraph "💾 Application Layer"
-        D[PHP API Endpoint<br/>📡 api_bin_data.php<br/>JSON Data Handler]
-        E[MariaDB Database<br/>🗄️ smart_waste_db<br/>7 Tables]
+    subgraph "Application Layer"
+        D[PHP API Endpoint<br/>api_bin_data.php<br/>JSON Data Handler]
+        E[MariaDB Database<br/>smart_waste_db<br/>7 Tables]
     end
     
-    subgraph "🖥️ Presentation Layer"
-        F[Admin Dashboard<br/>📊 Real-time Monitoring<br/>🚨 Alert Management]
-        G[Email Notifications<br/>📧 SMTP Alerts<br/>⚠️ Critical Events]
+    subgraph "Presentation Layer"
+        F[Admin Dashboard<br/>Real-time Monitoring<br/>Alert Management]
+        G[Email Notifications<br/>SMTP Alerts<br/>Critical Events]
     end
     
-    subgraph "📋 Database Operations"
-        H[UPDATE bins<br/>📊 level_percent]
-        I[INSERT waste_logs<br/>📝 Transaction History]
-        J[CHECK Thresholds<br/>🚨 Alert Logic]
-        K[UPDATE alert_history<br/>📅 Alert States]
-        L[INSERT notifications<br/>💬 User Messages]
+    subgraph "Database Operations"
+        H[UPDATE bins<br/>level_percent]
+        I[INSERT waste_logs<br/>Transaction History]
+        J[CHECK Thresholds<br/>Alert Logic]
+        K[UPDATE alert_history<br/>Alert States]
+        L[INSERT notifications<br/>User Messages]
     end
     
     A -->|Serial Communication<br/>CSV Format| B
-    B -->|HTTP POST<br/>JSON: {bin_id, fill_level}| C
+    B -->|HTTP POST<br/>JSON bin_id fill_level| C
     C --> D
     D --> H
     D --> I
@@ -230,26 +230,26 @@ flowchart TD
 ### **📊 Relationship Dependency Graph**
 ```mermaid
 graph TB
-    subgraph "🔄 Independent Entities"
-        A[ADMINS<br/>👥 User Management<br/>🔒 Authentication]
-        B[NOTIFICATIONS<br/>💬 Message System<br/>🔔 User Alerts]
-        C[SENSOR_READINGS<br/>🌡️ Environmental Data<br/>📡 IoT Monitoring]
-        D[SETTINGS<br/>⚙️ System Configuration<br/>📋 Parameters]
+    subgraph "Independent Entities"
+        A[ADMINS<br/>User Management<br/>Authentication]
+        B[NOTIFICATIONS<br/>Message System<br/>User Alerts]
+        C[SENSOR_READINGS<br/>Environmental Data<br/>IoT Monitoring]
+        D[SETTINGS<br/>System Configuration<br/>Parameters]
     end
     
-    subgraph "🎯 Core Business Entity"
-        E[BINS<br/>📊 Central Hub<br/>🗂️ Waste Management<br/>📍 Location Tracking]
+    subgraph "Core Business Entity"
+        E[BINS<br/>Central Hub<br/>Waste Management<br/>Location Tracking]
     end
     
-    subgraph "📈 Dependent Entities"
-        F[WASTE_LOGS<br/>📝 Transaction History<br/>⚖️ Weight Tracking]
-        G[ALERT_HISTORY<br/>🚨 Alert States<br/>📅 Timeline Management]
-        H[BIN_SENSORS<br/>🔧 Future Expansion<br/>📡 Individual Sensors]
+    subgraph "Dependent Entities"
+        F[WASTE_LOGS<br/>Transaction History<br/>Weight Tracking]
+        G[ALERT_HISTORY<br/>Alert States<br/>Timeline Management]
+        H[BIN_SENSORS<br/>Future Expansion<br/>Individual Sensors]
     end
     
-    E -->|1:M CASCADE DELETE<br/>🔗 FK: bin_id| F
-    E -.->|1:M IMPLICIT REF<br/>🔗 UNIQUE(bin_id,alert_key)| G
-    E -.->|1:M PLANNED<br/>🔗 Future Implementation| H
+    E -->|1:M CASCADE DELETE<br/>FK: bin_id| F
+    E -.->|1:M IMPLICIT REF<br/>UNIQUE bin_id alert_key| G
+    E -.->|1:M PLANNED<br/>Future Implementation| H
     
     classDef independent fill:#e8f5e8,stroke:#4caf50,stroke-width:2px
     classDef core fill:#fff3e0,stroke:#ff9800,stroke-width:4px
@@ -291,7 +291,7 @@ SAMPLE DATA VALUES:
 ├── Bin #1: "Plastic" - Type: Plastic - Location: Floor 1, Section A - Level: 22%
 ├── Bin #2: "Metal" - Type: Metal - Location: Floor 1, Section B - Level: 55% 
 ├── Bin #3: "Paper" - Type: Paper - Location: Floor 2, Section A - Level: 78%
-└── Bin #4: "Organic" - Type: Organic - Location: Floor 2, Section B - Level: 45%
+└── Bin #4: "Organic / Other Waste" - Type: Organic / Other Waste - Location: Floor 2, Section B - Level: 45%
 ```
 
 ### **2. 📊 WASTE_LOGS** (Transaction History Entity)
@@ -498,34 +498,34 @@ CONFIGURATION CATEGORIES:
 ### **📊 Real-Time System Operation Flow**
 ```mermaid
 flowchart TD
-    subgraph "🔧 Hardware Layer"
-        A1[Arduino R4 WiFi<br/>🎯 Main Controller]
-        A2[4x HC-SR04<br/>📏 Ultrasonic Sensors<br/>Distance Measurement]
-        A3[Trash Separator<br/>🔍 4-Sensor Classification<br/>Inductive + IR + Capacitive + Reflective]
-        A4[NodeMCU ESP8266<br/>📡 WiFi Gateway]
+    subgraph "Hardware Layer"
+        A1[Arduino R4 WiFi<br/>Main Controller]
+        A2[4x HC-SR04<br/>Ultrasonic Sensors<br/>Distance Measurement]
+        A3[Trash Separator<br/>4-Sensor Classification<br/>Inductive + IR + Capacitive + Reflective]
+        A4[NodeMCU ESP8266<br/>WiFi Gateway]
     end
     
-    subgraph "🌐 Communication Layer"
-        B1[Serial Communication<br/>📊 CSV Format<br/>bin_id,level,category,weight]
-        B2[HTTP POST Request<br/>� JSON Payload<br/>{"bin_id": 1, "fill_level": 85}]
+    subgraph "Communication Layer"
+        B1[Serial Communication<br/>CSV Format<br/>bin_id,level,category,weight]
+        B2[HTTP POST Request<br/>JSON Payload<br/>bin_id: 1, fill_level: 85]
     end
     
-    subgraph "💾 Database Layer"
-        C1[API Endpoint<br/>📡 api_bin_data.php<br/>Validates & Processes Data]
+    subgraph "Database Layer"
+        C1[API Endpoint<br/>api_bin_data.php<br/>Validates & Processes Data]
         
         subgraph "Database Operations"
-            C2[UPDATE bins<br/>📊 SET level_percent<br/>⚡ SET status]
-            C3[INSERT waste_logs<br/>📝 Log disposal event<br/>⚖️ Record weight]
-            C4[CHECK Thresholds<br/>🚨 Alert Logic Engine<br/>75% → Near Full<br/>95% → Critical]
-            C5[UPDATE alert_history<br/>📅 Track alert states<br/>🔒 UNIQUE constraint]
-            C6[INSERT notifications<br/>💬 User messages<br/>📧 Email triggers]
+            C2[UPDATE bins<br/>SET level_percent<br/>SET status]
+            C3[INSERT waste_logs<br/>Log disposal event<br/>Record weight]
+            C4[CHECK Thresholds<br/>Alert Logic Engine<br/>75% to Near Full<br/>95% to Critical]
+            C5[UPDATE alert_history<br/>Track alert states<br/>UNIQUE constraint]
+            C6[INSERT notifications<br/>User messages<br/>Email triggers]
         end
     end
     
-    subgraph "🖥️ Presentation Layer"
-        D1[Admin Dashboard<br/>📊 Real-time Monitoring<br/>🎛️ Control Panel]
-        D2[Email Alerts<br/>📧 SMTP Notifications<br/>⚠️ Critical Events]
-        D3[Reports & Analytics<br/>📈 Waste Trends<br/>📊 KPI Metrics]
+    subgraph "Presentation Layer"
+        D1[Admin Dashboard<br/>Real-time Monitoring<br/>Control Panel]
+        D2[Email Alerts<br/>SMTP Notifications<br/>Critical Events]
+        D3[Reports & Analytics<br/>Waste Trends<br/>KPI Metrics]
     end
     
     A1 --> A2
@@ -569,12 +569,12 @@ stateDiagram-v2
     NearFull --> Full: level >= 95%
     Full --> Overflow: level > 100%
     
-    Empty: 🟢 Empty (0-24%)<br/>✅ Normal Operation<br/>No Alerts
-    Low: 🔵 Low (25-49%)<br/>✅ Normal Operation<br/>Info Notification
-    OK: 🟡 OK (50-74%)<br/>✅ Normal Operation<br/>Standard Monitoring
-    NearFull: 🟠 Near Full (75-94%)<br/>⚠️ Warning Alert<br/>📧 Email Notification
-    Full: 🔴 Full (95-100%)<br/>🚨 Critical Alert<br/>📧 Urgent Email
-    Overflow: 🟣 Overflow (>100%)<br/>🆘 Emergency Alert<br/>📧 Immediate Action
+    Empty: Empty 0-24 percent<br/>Normal Operation<br/>No Alerts
+    Low: Low 25-49 percent<br/>Normal Operation<br/>Info Notification
+    OK: OK 50-74 percent<br/>Normal Operation<br/>Standard Monitoring
+    NearFull: Near Full 75-94 percent<br/>Warning Alert<br/>Email Notification
+    Full: Full 95-100 percent<br/>Critical Alert<br/>Urgent Email
+    Overflow: Overflow over 100 percent<br/>Emergency Alert<br/>Immediate Action
     
     note right of NearFull
         INSERT alert_history
@@ -621,26 +621,26 @@ IF bins.level_percent >= 95 AND alert_history.alert_key != 'bin_full'
 #### **🗂️ Waste Classification Priority Logic**
 ```mermaid
 flowchart TD
-    A[🔍 Object Detected<br/>IR Sensor Triggered] --> B{🧲 Inductive Sensor<br/>Metal Detection?}
+    A[Object Detected<br/>IR Sensor Triggered] --> B{Inductive Sensor<br/>Metal Detection?}
     
-    B -->|YES| C[🥫 METAL<br/>bin_id: 2<br/>confidence: 95%<br/>Priority: 1]
+    B -->|YES| C[METAL<br/>bin_id: 2<br/>confidence: 95%<br/>Priority: 1]
     
-    B -->|NO| D{💧 Capacitive Sensor<br/>Material Properties?}
+    B -->|NO| D{Capacitive Sensor<br/>Material Properties?}
     
-    D -->|YES| E{💡 Reflective Sensor<br/>Surface Properties?}
+    D -->|YES| E{Reflective Sensor<br/>Surface Properties?}
     
-    E -->|YES| F[📄 PAPER<br/>bin_id: 3<br/>confidence: 85%<br/>Priority: 2]
+    E -->|YES| F[PAPER<br/>bin_id: 3<br/>confidence: 85%<br/>Priority: 2]
     
-    E -->|NO| G[🥤 PLASTIC<br/>bin_id: 1<br/>confidence: 80%<br/>Priority: 3]
+    E -->|NO| G[PLASTIC<br/>bin_id: 1<br/>confidence: 80%<br/>Priority: 3]
     
-    D -->|NO| H[🍎 ORGANIC<br/>bin_id: 4<br/>confidence: 70%<br/>Priority: 4 Default]
+    D -->|NO| H[Organic / Other Waste<br/>bin_id: 4<br/>confidence: 70%<br/>Priority: 4 Default]
     
-    C --> I[📊 Log to Database<br/>INSERT waste_logs<br/>UPDATE bins.level_percent]
+    C --> I[Log to Database<br/>INSERT waste_logs<br/>UPDATE bins level_percent]
     F --> I
     G --> I
     H --> I
     
-    I --> J[✅ Classification Complete<br/>Serial → NodeMCU → API]
+    I --> J[Classification Complete<br/>Serial to NodeMCU to API]
     
     style C fill:#ff9800,stroke:#e65100,stroke-width:3px
     style F fill:#4caf50,stroke:#2e7d32,stroke-width:3px
@@ -655,7 +655,7 @@ flowchart TD
 ```javascript
 // Arduino Classification Algorithm
 function classifyTrash() {
-    // Priority: Metal > Paper > Plastic > Organic (default)
+    // Priority: Metal > Paper > Plastic > Organic / Other Waste (default)
     
     if (inductiveSensor.detect()) {
         return {category: "Metal", bin_id: 2, confidence: 95};
@@ -667,7 +667,7 @@ function classifyTrash() {
         return {category: "Plastic", bin_id: 1, confidence: 80};
     }
     else {
-        return {category: "Organic", bin_id: 4, confidence: 70};
+        return {category: "Organic / Other Waste", bin_id: 4, confidence: 70};
     }
 }
 ```
@@ -677,46 +677,46 @@ function classifyTrash() {
 #### **🛡️ Database Constraints Matrix**
 ```mermaid
 graph LR
-    subgraph "🗂️ BINS Validation"
-        B1[level_percent<br/>📊 0 ≤ level ≤ 110<br/>Range Check]
-        B2[status<br/>⚡ ENUM Values<br/>OK|Near Full|Critical|Full]
-        B3[name<br/>📛 NOT NULL<br/>VARCHAR(50)]
+    subgraph "BINS Validation"
+        B1[level_percent<br/>0 to 110 Range Check<br/>Integer Validation]
+        B2[status<br/>ENUM Values<br/>OK Near Full Critical Full]
+        B3[name<br/>NOT NULL<br/>VARCHAR 50]
     end
     
-    subgraph "📝 WASTE_LOGS Validation"
-        W1[bin_id<br/>🔗 FK → bins.id<br/>CASCADE DELETE]
-        W2[weight_kg<br/>⚖️ weight > 0<br/>DECIMAL(10,2)]
-        W3[category<br/>🗂️ Valid Waste Type<br/>Metal|Paper|Plastic|Organic]
+    subgraph "WASTE_LOGS Validation"
+        W1[bin_id<br/>FK to bins.id<br/>CASCADE DELETE]
+        W2[weight_kg<br/>weight greater than 0<br/>DECIMAL 10,2]
+        W3[category<br/>Valid Waste Type<br/>Metal Paper Plastic Organic / Other Waste]
     end
     
-    subgraph "🚨 ALERT_HISTORY Validation"
-        A1[bin_id + alert_key<br/>🔒 UNIQUE Composite<br/>One alert per type/bin]
-        A2[is_active<br/>🟢 BOOLEAN 0|1<br/>TINYINT(1)]
-        A3[alert_key<br/>🚨 Valid Alert Types<br/>bin_near_full|bin_full|overflow]
+    subgraph "ALERT_HISTORY Validation"
+        A1[bin_id plus alert_key<br/>UNIQUE Composite<br/>One alert per type per bin]
+        A2[is_active<br/>BOOLEAN 0 or 1<br/>TINYINT 1]
+        A3[alert_key<br/>Valid Alert Types<br/>bin_near_full bin_full overflow]
     end
     
-    subgraph "👥 ADMINS Validation"
-        D1[username<br/>🔒 UNIQUE Constraint<br/>No duplicates]
-        D2[email<br/>📧 FORMAT CHECK<br/>Valid email pattern]
-        D3[password_hash<br/>🔐 NOT NULL<br/>VARCHAR(255)]
+    subgraph "ADMINS Validation"
+        D1[username<br/>UNIQUE Constraint<br/>No duplicates]
+        D2[email<br/>FORMAT CHECK<br/>Valid email pattern]
+        D3[password_hash<br/>NOT NULL<br/>VARCHAR 255]
     end
     
-    subgraph "🔔 NOTIFICATIONS Validation"
-        N1[type<br/>📝 ENUM<br/>success|info|warning|danger]
-        N2[message<br/>💬 LENGTH 1-255<br/>NOT NULL]
-        N3[is_read<br/>👁️ BOOLEAN 0|1<br/>DEFAULT 0]
+    subgraph "NOTIFICATIONS Validation"
+        N1[type<br/>ENUM<br/>success info warning danger]
+        N2[message<br/>LENGTH 1-255<br/>NOT NULL]
+        N3[is_read<br/>BOOLEAN 0 or 1<br/>DEFAULT 0]
     end
     
-    subgraph "🌡️ SENSOR_READINGS Validation"
-        S1[temperature<br/>🌡️ -50 ≤ temp ≤ 100<br/>Celsius Range]
-        S2[humidity<br/>💧 0 ≤ humidity ≤ 100<br/>Percentage Range]
-        S3[client_ip<br/>🌐 IPv4/IPv6 Format<br/>VARCHAR(45)]
+    subgraph "SENSOR_READINGS Validation"
+        S1[temperature<br/>-50 to 100<br/>Celsius Range]
+        S2[humidity<br/>0 to 100<br/>Percentage Range]
+        S3[client_ip<br/>IPv4 IPv6 Format<br/>VARCHAR 45]
     end
     
-    subgraph "⚙️ SETTINGS Validation"
-        T1[setting_key<br/>🔧 UNIQUE Constraint<br/>No duplicate keys]
-        T2[setting_value<br/>💾 NOT NULL<br/>TEXT Format]
-        T3[Categories<br/>📋 SMTP|Alert|System<br/>Configuration Groups]
+    subgraph "SETTINGS Validation"
+        T1[setting_key<br/>UNIQUE Constraint<br/>No duplicate keys]
+        T2[setting_value<br/>NOT NULL<br/>TEXT Format]
+        T3[Categories<br/>SMTP Alert System<br/>Configuration Groups]
     end
     
     style B1 fill:#e3f2fd,stroke:#1976d2

@@ -983,3 +983,31 @@ graph LR
 ## 10. Summary
 This system provides a scalable, real-time solution for smart waste management, combining IoT hardware, robust backend logic, and a user-friendly dashboard. It is designed for reliability, extensibility, and actionable insights for facility managers and city operators.
 
+---
+
+## 11. Input, Process, and Output
+
+### Input Data
+- **Sensor Readings**: Fill levels (percent), waste type detection (Metal, Paper, Plastic, Others), environmental data (temperature, humidity).
+- **User/Admin Actions**: Login credentials, configuration changes, manual bin status updates.
+- **System Events**: API requests from NodeMCU, scheduled maintenance triggers.
+
+### Process
+- **Data Acquisition**: Arduino collects sensor data and classifies waste, NodeMCU transmits readings to backend API.
+- **Validation & Storage**: PHP API validates incoming data, updates bin status, logs waste events, and stores environmental readings in MySQL.
+- **Business Logic**:
+  - Bin status calculation (OK, Moderately Full, Near Full, Full)
+  - Waste classification (priority logic)
+  - Alert generation (threshold checks)
+  - Notification dispatch (critical events)
+  - User authentication and access control
+- **Visualization**: Dashboard renders KPIs, charts, live bin status, and alert history for admins.
+
+### Output
+- **Dashboard Views**: Real-time bin status, fill level charts, waste category analytics, alert history, system health indicators.
+- **Notifications**: Email/SMS alerts for critical bin status, system errors, and maintenance reminders.
+- **Database Records**: Updated bin status, waste logs, alert history, notifications, sensor readings, and admin actions.
+- **Reports**: Downloadable analytics and historical data for operational review.
+
+---
+

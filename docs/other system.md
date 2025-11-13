@@ -854,3 +854,132 @@ POST /api/api_bin_data.php {"bin_id": 2, "fill_level": 78}
 - **Session Management:** Secure PHP sessions with timeout
 - **Input Validation:** Server-side validation for all user inputs
 - **Access Control:** Role-based permissions (Admin/Operator/Viewer)
+
+
+# Smart Waste Management System - Conceptual Design
+
+## 1. System Overview
+A modern IoT-based waste management platform for real-time monitoring, analytics, and alerting of waste bins in public or private facilities. The system integrates hardware sensors, microcontrollers, a web dashboard, and a relational database to optimize waste collection and environmental operations.
+
+---
+
+## 2. Key Components
+
+### 2.1 Hardware Layer
+- **Arduino UNO R4 WiFi**: Main sensor hub, reads bin fill levels and classifies waste type.
+- **NodeMCU ESP8266**: WiFi gateway, receives serial data from Arduino and sends HTTP POST requests to the backend API.
+- **Sensors**:
+  - **HC-SR04 Ultrasonic Sensors**: Measure fill levels for each bin.
+  - **Inductive Sensor**: Detects metal waste.
+  - **IR Sensor**: Detects object presence.
+  - **Capacitive Sensor**: Differentiates plastics and other materials.
+  - **Reflective Sensor**: Identifies paper waste.
+
+### 2.2 Software Layer
+- **PHP Backend/API**: Receives data from NodeMCU, updates MySQL database, triggers alerts and notifications.
+- **MySQL Database**: Stores bin status, waste logs, alerts, notifications, admin users, and system settings.
+- **Web Dashboard (PHP/HTML/CSS/JS)**: Displays KPIs, charts, live bin status, and alert history for administrators.
+
+---
+
+## 3. Data Flow & Interactions
+
+```mermaid
+flowchart TD
+    A[Arduino R4 WiFi] -->|Serial| B[NodeMCU ESP8266]
+    B -->|HTTP POST| C[PHP API]
+    C -->|SQL| D[MySQL Database]
+    D -->|Query| E[Web Dashboard]
+    C -->|Trigger| F[Email/SMS Alerts]
+```
+
+- **Sensor readings** are sent from Arduino to NodeMCU.
+- **NodeMCU** formats and transmits data to the PHP API.
+- **API** validates, stores, and processes data, updating bin status and logs.
+- **Alerts/notifications** are triggered based on thresholds and sent to admins.
+- **Dashboard** visualizes all data and system health in real time.
+
+---
+
+## 4. Core Entities & Relationships
+
+- **Bins**: Each bin has a name (Plastic, Paper, Metal, Others), fill level, and last update timestamp.
+- **Waste Logs**: Records each disposal event with bin reference, category, weight, and timestamp.
+- **Alert History**: Tracks alert states for bins (Near Full, Full, Overflow).
+- **Notifications**: Stores system messages and alert events.
+- **Admins**: User accounts for dashboard access and management.
+- **Sensor Readings**: Environmental data (temperature, humidity, IP).
+- **Settings**: System configuration (SMTP, thresholds, etc).
+
+---
+
+## 5. Business Logic & Rules
+
+- **Bin Status Calculation**: Fill level determines status (OK, Moderately Full, Near Full, Full).
+- **Waste Classification**: Priority logic: Metal > Paper > Plastic > Others.
+- **Alert Triggers**: Thresholds (80%, 100%) generate warnings and critical alerts.
+- **Notifications**: Sent for critical events, system errors, and maintenance needs.
+- **Admin Security**: Role-based access, password hashing, session management.
+
+---
+
+## 6. User Experience & Dashboard Features
+
+- **KPI Cards**: Total bins, items disposed, critical alerts.
+- **Charts**: Bar chart (waste category counts), donut chart (bin fill levels).
+- **Live Monitor**: Real-time bin status, last update, online/offline indicator.
+- **Alert History**: Table of recent alerts and notifications.
+- **Responsive Design**: Mobile and desktop friendly.
+
+---
+
+## 7. Extensibility & Future Enhancements
+
+- **Additional Sensors**: Support for more waste types or environmental metrics.
+- **Automated Collection**: Integration with smart vehicles or robotic arms.
+- **Predictive Analytics**: Forecast bin fill rates and optimize collection schedules.
+- **Mobile App**: Admin notifications and remote monitoring.
+- **Integration**: Connect with city-wide smart infrastructure.
+
+---
+
+## 8. Security & Reliability
+
+- **Data Validation**: All inputs validated server-side.
+- **Authentication**: Secure login for admins.
+- **Error Handling**: Graceful fallback and logging for hardware/API failures.
+- **Backup & Recovery**: Regular database backups and failover planning.
+
+---
+
+## 9. Conceptual Diagram
+
+```mermaid
+graph LR
+    subgraph Hardware
+        ARDUINO[Arduino R4 WiFi]
+        NODEMCU[NodeMCU ESP8266]
+        SENSORS[Sensors: Ultrasonic, Inductive, IR, Capacitive, Reflective]
+    end
+    subgraph Backend
+        API[PHP API]
+        DB[(MySQL Database)]
+    end
+    subgraph Dashboard
+        WEB[Web Dashboard]
+        ADMIN[Admin Users]
+    end
+    ARDUINO --> NODEMCU
+    NODEMCU --> API
+    API --> DB
+    DB --> WEB
+    WEB --> ADMIN
+    API --> WEB
+    API --> ADMIN
+```
+
+---
+
+## 10. Summary
+This system provides a scalable, real-time solution for smart waste management, combining IoT hardware, robust backend logic, and a user-friendly dashboard. It is designed for reliability, extensibility, and actionable insights for facility managers and city operators.
+
